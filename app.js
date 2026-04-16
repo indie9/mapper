@@ -4,7 +4,7 @@
     rolesMap: new Map(),
     accessKeysCatalog: [],
     accessKeysMap: new Map(),
-    routesOriginal: null,
+    routesBaseline: null,
     routesWorking: null,
     embeddedRolesRaw: null,
     embeddedRoutesRaw: null,
@@ -85,19 +85,6 @@
     return keys;
   }
 
-  function findOriginalById(id) {
-    const parts = id.split("|");
-    let cursor = state.routesOriginal;
-    for (let i = 0; i < parts.length; i += 4) {
-      const index = Number(parts[i + 1]);
-      if (!Array.isArray(cursor) || Number.isNaN(index) || index >= cursor.length) return null;
-      const node = cursor[index];
-      if (i >= parts.length - 4) return node;
-      cursor = node.children;
-    }
-    return null;
-  }
-
   function extractOriginalRoles(route) {
     if (!route || !route.meta || !Array.isArray(route.meta.roles) || route.meta.roles.length === 0) {
       return [];
@@ -112,11 +99,11 @@
     return route.meta.accessInfoKeys.filter((k) => typeof k === "string");
   }
 
-  function collectNodes(routes, parentId = null, depth = 0) {
+  function collectNodes(routes, baselineRoutes = null, parentId = null, depth = 0) {
     const ids = [];
     routes.forEach((route, index) => {
       const id = nodeId(route, parentId, index);
-      const original = findOriginalById(id);
+      const original = Array.isArray(baselineRoutes) ? (baselineRoutes[index] || null) : null;
       state.nodesById.set(id, {
         id,
         route,
@@ -131,7 +118,8 @@
       });
       ids.push(id);
       if (Array.isArray(route.children) && route.children.length) {
-        state.nodesById.get(id).childIds = collectNodes(route.children, id, depth + 1);
+        const originalChildren = original && Array.isArray(original.children) ? original.children : null;
+        state.nodesById.get(id).childIds = collectNodes(route.children, originalChildren, id, depth + 1);
       }
     });
     return ids;
@@ -165,6 +153,28 @@
     return merged;
   }
 
+  function getOriginalEffectiveRoles(node) {
+    if (!node) return new Set();
+    if (!node.childIds.length) return new Set(node.originalRoles);
+    const merged = new Set();
+    node.childIds.forEach((cid) => {
+      const child = state.nodesById.get(cid);
+      getOriginalEffectiveRoles(child).forEach((role) => merged.add(role));
+    });
+    return merged;
+  }
+
+  function getOriginalEffectiveAccessKeys(node) {
+    if (!node) return new Set();
+    if (!node.childIds.length) return new Set(node.originalAccessKeys);
+    const merged = new Set();
+    node.childIds.forEach((cid) => {
+      const child = state.nodesById.get(cid);
+      getOriginalEffectiveAccessKeys(child).forEach((key) => merged.add(key));
+    });
+    return merged;
+  }
+
   function setsEqual(a, b) {
     if (a.size !== b.size) return false;
     for (const x of a) if (!b.has(x)) return false;
@@ -172,8 +182,8 @@
   }
 
   function isChanged(node) {
-    return !setsEqual(getEffectiveRoles(node), node.originalRoles)
-      || !setsEqual(getEffectiveAccessKeys(node), node.originalAccessKeys);
+    return !setsEqual(getEffectiveRoles(node), getOriginalEffectiveRoles(node))
+      || !setsEqual(getEffectiveAccessKeys(node), getOriginalEffectiveAccessKeys(node));
   }
 
   function matchesSearch(node) {
@@ -257,7 +267,8 @@
 
     const meta = document.createElement("span");
     meta.className = "tree-meta";
-    meta.textContent = `roles: ${getEffectiveRoles(node).size} | flags: ${getEffectiveAccessKeys(node).size}${isChanged(node) ? " | changed" : ""}`;
+    const showChanged = !hasChildren && isChanged(node);
+    meta.textContent = `roles: ${getEffectiveRoles(node).size} | flags: ${getEffectiveAccessKeys(node).size}${showChanged ? " | changed" : ""}`;
     row.appendChild(meta);
 
     wrap.appendChild(row);
@@ -462,10 +473,9 @@
     state.roles = roles;
     state.rolesMap = new Map(roles.map((r) => [r.authority, r]));
     state.accessKeysMap = new Map(state.accessKeysCatalog.map((k) => [k, k]));
-    state.routesOriginal = clone(routes);
     state.routesWorking = clone(routes);
     state.nodesById.clear();
-    state.rootNodeIds = collectNodes(state.routesWorking, null, 0);
+    state.rootNodeIds = collectNodes(state.routesWorking, state.routesBaseline, null, 0);
     state.expanded = new Set(state.rootNodeIds);
     state.selectedNodeId = null;
     refreshAll(true);
@@ -532,6 +542,7 @@
       if (!embedded || !embedded.roles || !embedded.routes) throw new Error("Не найдены встроенные данные (data.js).");
       state.embeddedRolesRaw = clone(embedded.roles);
       state.embeddedRoutesRaw = clone(embedded.routes);
+      state.routesBaseline = clone(embedded.routes);
       state.embeddedAccessKeysRaw = embedded.accessInfoKeys != null ? clone(embedded.accessInfoKeys) : null;
       state.accessKeysCatalog = normalizeAccessKeysCatalog(embedded.accessInfoKeys);
       const roles = normalizeRolesJson(embedded.roles);
