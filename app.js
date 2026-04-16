@@ -335,7 +335,7 @@
     const isParent = node.childIds.length > 0;
     const effectiveRoles = getEffectiveRoles(node);
     const effectiveAccess = getEffectiveAccessKeys(node);
-    el.selectedMeta.textContent = `${resolveTitle(node.route)} | ${node.route.path || "-"} | Ролей: ${effectiveRoles.size}, флагов: ${effectiveAccess.size}`;
+    el.selectedMeta.textContent = `${resolveTitle(node.route)} | ${node.route.path || "-"} | Прав: ${effectiveRoles.size}, флагов: ${effectiveAccess.size}`;
     el.allRolesBtn.disabled = isParent;
     el.clearRolesBtn.disabled = isParent;
     el.allAccessBtn.disabled = isParent;
@@ -345,17 +345,17 @@
       const info = document.createElement("div");
       info.className = "status muted";
       info.style.marginBottom = "8px";
-      info.textContent = "У родителя роли и флаги считаются по объединению потомков (только просмотр).";
+      info.textContent = "У родителя права и флаги считаются по объединению потомков (только просмотр).";
       el.rolesBox.appendChild(info);
       const { split, colRoles, colFlags } = createTwoColumnLayout();
       el.rolesBox.appendChild(split);
       appendSelectedList(
         colRoles,
-        "Выбрано ролей",
+        "Выбрано прав",
         state.roles.filter((role) => effectiveRoles.has(role.authority)),
         (role) => role.authority
       );
-      appendSubsection(colRoles, "Роли");
+      appendSubsection(colRoles, "Права");
       state.roles.forEach((role) => {
         const label = document.createElement("label");
         label.className = "role-item role-item-readonly";
@@ -392,11 +392,11 @@
     el.rolesBox.appendChild(split);
     appendSelectedList(
       colRoles,
-      "Выбрано ролей",
+      "Выбрано прав",
       state.roles.filter((role) => effectiveRoles.has(role.authority)),
       (role) => role.authority
     );
-    appendSubsection(colRoles, "Роли");
+    appendSubsection(colRoles, "Права");
     state.roles.forEach((role) => {
       const label = document.createElement("label");
       label.className = "role-item";
@@ -537,7 +537,7 @@
       const roles = normalizeRolesJson(embedded.roles);
       if (!Array.isArray(embedded.routes)) throw new Error("routes.json: ожидается массив");
       rebuildState(roles, embedded.routes);
-      setStatus("Данные загружены. Редактируйте роли и флаги, затем экспортируйте JSON.", true);
+      setStatus("Данные загружены. Редактируйте права и флаги, затем экспортируйте JSON.", true);
     } catch (e) {
       setError(e.message);
       setStatus("Ошибка инициализации встроенных данных");
