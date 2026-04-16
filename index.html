@@ -11,19 +11,25 @@
     <header class="header-card">
       <div>
         <h1>Role-Menu Mapper</h1>
-        <p>Управление доступностью пунктов меню по ролям</p>
+        <p>Настройка пунктов меню: роли и флаги</p>
       </div>
       <div class="header-actions">
-        <label class="file-input">Импорт результата <input id="importFile" type="file" accept=".json"></label>
-        <label class="file-input">Импорт roles.json <input id="importRolesFile" type="file" accept=".json"></label>
-        <label class="file-input">Импорт routes.json <input id="importRoutesFile" type="file" accept=".json"></label>
-        <button id="exportMappedBtn" type="button" disabled>Экспорт результата</button>
+        <button id="exportMappedBtn" class="btn-primary" type="button" disabled>Экспорт результата</button>
+        <details class="import-panel">
+          <summary>Импорт файлов</summary>
+          <div class="import-panel-content">
+            <label class="file-input">Импорт результата <input id="importFile" type="file" accept=".json"></label>
+            <label class="file-input">Импорт roles.json <input id="importRolesFile" type="file" accept=".json"></label>
+            <label class="file-input">Импорт routes.json <input id="importRoutesFile" type="file" accept=".json"></label>
+            <label class="file-input">Импорт accessInfoKeys.json <input id="importAccessKeysFile" type="file" accept=".json"></label>
+          </div>
+        </details>
       </div>
     </header>
 
     <section class="panel">
       <div class="toolbar">
-        <input id="searchInput" type="text" placeholder="Поиск по path / name / title">
+        <input id="searchInput" type="text" placeholder="Поиск: path, название, имя флага accessInfoKeys">
       </div>
       <div id="statusLine" class="status muted">Инициализация встроенных данных...</div>
       <div id="errorBox" class="error"></div>
@@ -38,14 +44,18 @@
         </div>
         <div id="treeRoot" class="tree-root"></div>
       </section>
-      <section class="panel pane">
-        <div class="pane-title">Роли выбранного узла</div>
+      <section class="panel pane pane--roles">
+        <div class="pane-title">Роли и флаги выбранного узла</div>
         <div id="selectedMeta" class="status muted">Узел не выбран</div>
         <div class="row">
-          <button id="allRolesBtn" type="button" disabled>Назначить все</button>
-          <button id="clearRolesBtn" type="button" disabled>Снять все</button>
+          <span class="toolbar-label">Роли:</span>
+          <button id="allRolesBtn" type="button" disabled>Все роли</button>
+          <button id="clearRolesBtn" type="button" disabled>Нет ролей</button>
+          <span class="toolbar-label">Флаги:</span>
+          <button id="allAccessBtn" type="button" disabled>Все флаги</button>
+          <button id="clearAccessBtn" type="button" disabled>Нет флагов</button>
         </div>
-        <div id="rolesBox" class="role-grid"></div>
+        <div id="rolesBox" class="roles-box"></div>
       </section>
     </main>
   </div>

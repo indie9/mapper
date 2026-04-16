@@ -284,20 +284,7 @@ window.__ROLE_MENU_MAPPER_DATA = {
           "SD_APPLICANT_EXT",
           "SD_MANAGER_EXT"
         ]
-      },
-      "children": [
-        {
-          "path": "/tasks/card",
-          "name": "TaskCard",
-          "meta": {
-            "title": "navbar.routes.page.card",
-            "visible": false,
-            "restricted": true,
-            "class": "tasks-card",
-            "pageClass": "old-styles-page gwt-styles-page"
-          }
-        }
-      ]
+      }
     },
     {
       "path": "/appeals",
@@ -1963,5 +1950,55 @@ window.__ROLE_MENU_MAPPER_DATA = {
         ]
       }
     }
+  ],
+  "accessInfoKeys": [
+    "canViewMyFavours",
+    "canViewAppeals",
+    "canViewProfile",
+    "canViewApplicantNotifications",
+    "canViewAgreements",
+    "canViewManagement",
+    "canViewKeBase",
+    "canViewKuService",
+    "canViewCatalog",
+    "canViewBaseSLA",
+    "canEditBaseSLA",
+    "canViewSettings",
+    "canEditKeBase",
+    "canEditKuService",
+    "canViewOrgProfile",
+    "canViewSummary",
+    "canViewExecutionIcon",
+    "canViewApproval",
+    "canViewRootOrg",
+    "canViewUsers",
+    "canViewClients",
+    "canViewOperatorNotifications",
+    "canViewContractors",
+    "canViewSubstitution",
+    "canViewCMDB",
+    "canEditCMDBLinks",
+    "canViewAllUsers",
+    "canViewTypesSettings",
+    "canViewRoles",
+    "canManageNoOrgUsers",
+    "canManageClientUsers",
+    "canViewSubscribe",
+    "canViewPays",
+    "canAddUsers",
+    "canViewUsers",
+    "canViewNoOrgUsers",
+    "canManageUsers",
+    "canViewUserGroups",
+    "canViewOrgGroups",
+    "canViewPublish",
+    "canViewMailings",
+    "canViewNews",
+    "canViewCalendar",
+    "canViewReports",
+    "canViewDashboards",
+    "canViewSettings",
+    "canViewReportDesigner",
+    "canViewBz"
   ]
 };

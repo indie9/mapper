@@ -1,40 +1,35 @@
 # Role-Menu Mapper
 
-Статический инструмент для аналитика, который помогает сопоставить роли и пункты меню на основе `roles.json` и `routes.json`.
+Статический инструмент для настройки пунктов меню: **`meta.roles`** и **`meta.accessInfoKeys`** (флаги доступа из `accessInfoKeys.json`).
 
 ## Запуск
 
-1. В проекте есть встроенный файл данных `tools/role-menu-mapper/data.js` (содержит `roles.json` и `routes.json`).
-2. Локализации меню подтягиваются из `tools/role-menu-mapper/navbar-i18n.js` (сгенерирован из `portal-config/localizations/navbar.properties`).
-3. Откройте `tools/role-menu-mapper/index.html` в браузере.
-4. Данные загрузятся сразу, без ручного импорта и без CORS.
-5. Выберите узел в дереве и отметьте нужные роли.
-6. Используйте кнопки экспорта:
-   - `Экспорт результата` — итоговый файл с измененными `meta.roles`.
-7. При необходимости можно опционально загрузить свои исходники через:
-   - `Импорт roles.json`,
-   - `Импорт routes.json`.
+1. В корне репозитория: `data.js` (встроенные `roles.json`, `routes.json`, каталог `accessInfoKeys`), `navbar-i18n.js`.
+2. Откройте `index.html` в браузере (или через статический сервер).
+3. Выберите узел в дереве и отметьте роли и флаги.
+4. **Экспорт результата** сохраняет `routes.mapped.json` с обновлёнными `meta.roles` и `meta.accessInfoKeys`.
 
-## Импорт существующего результата
+## Дополнительный импорт
 
-- Поле `import result` принимает JSON с той же структурой дерева маршрутов.
-- Роли подтягиваются по совпадению позиции узла в дереве.
+- **Импорт результата** — дерево маршрутов с теми же ролями и флагами (по позиции узла в дереве).
+- **Импорт roles.json / routes.json / accessInfoKeys.json** — опционально, подмена исходников без пересборки `data.js`.
 
-## Обновление исходных данных
+## Правила по умолчанию
 
-- Если изменились исходные `roles.json` или `portal-config/routes.json`, нужно пересобрать `tools/role-menu-mapper/data.js` (обновить встроенные данные).
-- Если изменился `portal-config/localizations/navbar.properties`, нужно пересобрать `tools/role-menu-mapper/navbar-i18n.js`.
+- Если у маршрута **`meta.roles`** нет или пусто — считается, что **не выбрана ни одна роль**.
+- Если **`meta.accessInfoKeys`** нет или пусто — считается, что **не выбран ни один флаг**.
+- У **родительских** узлов (есть `children`) роли и флаги **не редактируются вручную**: показывается объединение по потомкам, в экспорт уходит то же объединение.
 
-## Подготовка к деплою
+## Обновление встроенных данных
 
-- Инструмент полностью статический: `index.html`, `styles.css`, `app.js`, `data.js`, `navbar-i18n.js`.
-- Для деплоя достаточно отдать папку `tools/role-menu-mapper` через любой static hosting (Nginx, IIS, GitHub Pages, S3 static website).
+Пересобрать `data.js` из актуальных файлов в корне репозитория:
 
-## Правило пустых ролей
+```bash
+node -e "const fs=require('fs'); const roles=JSON.parse(fs.readFileSync('roles.json','utf8')); const routes=JSON.parse(fs.readFileSync('routes.json','utf8')); const raw=JSON.parse(fs.readFileSync('accessInfoKeys.json','utf8')); const accessInfoKeys=(Array.isArray(raw)?raw:(raw.accessInfo||[])).filter(k=>typeof k==='string'); fs.writeFileSync('data.js','window.__ROLE_MENU_MAPPER_DATA = '+JSON.stringify({roles,routes,accessInfoKeys},null,2)+';\\n');"
+```
 
-- Если у маршрута `meta.roles` отсутствует или пустой массив, стартовое значение в инструменте — **все доступные роли**.
+Локализации заголовков меню: обновить `navbar-i18n.js` при изменении `navbar.properties` (если используете).
 
-## Ограничения
+## Деплой
 
-- Инструмент меняет только `meta.roles`.
-- Остальные поля маршрутов сохраняются без изменений.
+Статический набор файлов: `index.html`, `styles.css`, `app.js`, `data.js`, `navbar-i18n.js` — отдать через любой static hosting (GitHub Pages, Nginx, IIS, S3).

@@ -2,10 +2,13 @@
   const state = {
     roles: [],
     rolesMap: new Map(),
+    accessKeysCatalog: [],
+    accessKeysMap: new Map(),
     routesOriginal: null,
     routesWorking: null,
     embeddedRolesRaw: null,
     embeddedRoutesRaw: null,
+    embeddedAccessKeysRaw: null,
     nodesById: new Map(),
     rootNodeIds: [],
     expanded: new Set(),
@@ -19,6 +22,7 @@
     importFile: document.getElementById("importFile"),
     importRolesFile: document.getElementById("importRolesFile"),
     importRoutesFile: document.getElementById("importRoutesFile"),
+    importAccessKeysFile: document.getElementById("importAccessKeysFile"),
     exportMappedBtn: document.getElementById("exportMappedBtn"),
     searchInput: document.getElementById("searchInput"),
     statusLine: document.getElementById("statusLine"),
@@ -28,6 +32,8 @@
     rolesBox: document.getElementById("rolesBox"),
     allRolesBtn: document.getElementById("allRolesBtn"),
     clearRolesBtn: document.getElementById("clearRolesBtn"),
+    allAccessBtn: document.getElementById("allAccessBtn"),
+    clearAccessBtn: document.getElementById("clearAccessBtn"),
     expandAllBtn: document.getElementById("expandAllBtn"),
     collapseAllBtn: document.getElementById("collapseAllBtn")
   };
@@ -58,10 +64,25 @@
     return roles;
   }
 
+  function normalizeAccessKeysCatalog(raw) {
+    if (!raw) return [];
+    const list = Array.isArray(raw) ? raw : raw && Array.isArray(raw.accessInfo) ? raw.accessInfo : null;
+    if (!list) return [];
+    return [...new Set(list.map((k) => String(k).trim()).filter(Boolean))].sort();
+  }
+
   function initializeWorkingRoles(route) {
     if (!route.meta) route.meta = {};
     const roles = Array.isArray(route.meta.roles) ? route.meta.roles.filter((r) => typeof r === "string") : [];
-    return roles.length ? roles : state.roles.map((r) => r.authority);
+    return roles;
+  }
+
+  function initializeWorkingAccessKeys(route) {
+    if (!route.meta) route.meta = {};
+    const keys = Array.isArray(route.meta.accessInfoKeys)
+      ? route.meta.accessInfoKeys.filter((k) => typeof k === "string")
+      : [];
+    return keys;
   }
 
   function findOriginalById(id) {
@@ -79,9 +100,16 @@
 
   function extractOriginalRoles(route) {
     if (!route || !route.meta || !Array.isArray(route.meta.roles) || route.meta.roles.length === 0) {
-      return state.roles.map((r) => r.authority);
+      return [];
     }
     return route.meta.roles.filter((r) => typeof r === "string");
+  }
+
+  function extractOriginalAccessKeys(route) {
+    if (!route || !route.meta || !Array.isArray(route.meta.accessInfoKeys) || route.meta.accessInfoKeys.length === 0) {
+      return [];
+    }
+    return route.meta.accessInfoKeys.filter((k) => typeof k === "string");
   }
 
   function collectNodes(routes, parentId = null, depth = 0) {
@@ -96,6 +124,8 @@
         parentId,
         roles: new Set(initializeWorkingRoles(route)),
         originalRoles: new Set(extractOriginalRoles(original)),
+        accessKeys: new Set(initializeWorkingAccessKeys(route)),
+        originalAccessKeys: new Set(extractOriginalAccessKeys(original)),
         childIds: [],
         visible: true
       });
@@ -125,17 +155,32 @@
     return merged;
   }
 
+  function getEffectiveAccessKeys(node) {
+    if (!node) return new Set();
+    if (!node.childIds.length) return new Set(node.accessKeys);
+    const merged = new Set();
+    node.childIds.forEach((cid) => {
+      getEffectiveAccessKeys(state.nodesById.get(cid)).forEach((k) => merged.add(k));
+    });
+    return merged;
+  }
+
+  function setsEqual(a, b) {
+    if (a.size !== b.size) return false;
+    for (const x of a) if (!b.has(x)) return false;
+    return true;
+  }
+
   function isChanged(node) {
-    const effective = getEffectiveRoles(node);
-    if (effective.size !== node.originalRoles.size) return true;
-    for (const role of effective) if (!node.originalRoles.has(role)) return true;
-    return false;
+    return !setsEqual(getEffectiveRoles(node), node.originalRoles)
+      || !setsEqual(getEffectiveAccessKeys(node), node.originalAccessKeys);
   }
 
   function matchesSearch(node) {
     if (!state.search) return true;
     const route = node.route || {};
-    const text = `${route.path || ""} ${route.name || ""} ${resolveTitle(route)}`.toLowerCase();
+    const keys = [...getEffectiveAccessKeys(node)].join(" ");
+    const text = `${route.path || ""} ${route.name || ""} ${resolveTitle(route)} ${keys}`.toLowerCase();
     return text.includes(state.search);
   }
 
@@ -150,6 +195,7 @@
   function syncNodeToRoute(node) {
     if (!node.route.meta) node.route.meta = {};
     node.route.meta.roles = [...getEffectiveRoles(node)].sort();
+    node.route.meta.accessInfoKeys = [...getEffectiveAccessKeys(node)].sort();
   }
 
   function syncAllNodesToRoutes() {
@@ -211,7 +257,7 @@
 
     const meta = document.createElement("span");
     meta.className = "tree-meta";
-    meta.textContent = `roles: ${getEffectiveRoles(node).size}${isChanged(node) ? " | changed" : ""}`;
+    meta.textContent = `roles: ${getEffectiveRoles(node).size} | flags: ${getEffectiveAccessKeys(node).size}${isChanged(node) ? " | changed" : ""}`;
     row.appendChild(meta);
 
     wrap.appendChild(row);
@@ -228,6 +274,52 @@
     state.rootNodeIds.forEach((id) => renderTreeNode(id, el.treeRoot));
   }
 
+  function appendSubsection(parent, title) {
+    const h = document.createElement("div");
+    h.className = "pane-subtitle";
+    h.textContent = title;
+    parent.appendChild(h);
+  }
+
+  function appendSelectedList(parent, title, items, itemFormatter) {
+    const box = document.createElement("div");
+    box.className = "selected-box";
+    const header = document.createElement("div");
+    header.className = "selected-box-title";
+    header.textContent = `${title}: ${items.length}`;
+    box.appendChild(header);
+
+    const content = document.createElement("div");
+    content.className = "selected-box-content";
+    if (!items.length) {
+      const empty = document.createElement("span");
+      empty.className = "selected-empty";
+      empty.textContent = "Ничего не выбрано";
+      content.appendChild(empty);
+    } else {
+      items.forEach((item) => {
+        const chip = document.createElement("span");
+        chip.className = "selected-chip";
+        chip.textContent = itemFormatter(item);
+        content.appendChild(chip);
+      });
+    }
+    box.appendChild(content);
+    parent.appendChild(box);
+  }
+
+  function createTwoColumnLayout() {
+    const split = document.createElement("div");
+    split.className = "roles-flags-split";
+    const colRoles = document.createElement("div");
+    colRoles.className = "roles-flags-col roles-flags-col--roles";
+    const colFlags = document.createElement("div");
+    colFlags.className = "roles-flags-col roles-flags-col--flags";
+    split.appendChild(colRoles);
+    split.appendChild(colFlags);
+    return { split, colRoles, colFlags };
+  }
+
   function renderRolesPanel() {
     el.rolesBox.innerHTML = "";
     const node = state.selectedNodeId ? state.nodesById.get(state.selectedNodeId) : null;
@@ -235,20 +327,35 @@
       el.selectedMeta.textContent = "Узел не выбран";
       el.allRolesBtn.disabled = true;
       el.clearRolesBtn.disabled = true;
+      el.allAccessBtn.disabled = true;
+      el.clearAccessBtn.disabled = true;
       return;
     }
 
     const isParent = node.childIds.length > 0;
     const effectiveRoles = getEffectiveRoles(node);
-    el.selectedMeta.textContent = `${resolveTitle(node.route)} | ${node.route.path || "-"} | Ролей: ${effectiveRoles.size}`;
+    const effectiveAccess = getEffectiveAccessKeys(node);
+    el.selectedMeta.textContent = `${resolveTitle(node.route)} | ${node.route.path || "-"} | Ролей: ${effectiveRoles.size}, флагов: ${effectiveAccess.size}`;
     el.allRolesBtn.disabled = isParent;
     el.clearRolesBtn.disabled = isParent;
+    el.allAccessBtn.disabled = isParent;
+    el.clearAccessBtn.disabled = isParent;
 
     if (isParent) {
       const info = document.createElement("div");
       info.className = "status muted";
-      info.textContent = "Роли родителя рассчитываются автоматически из потомков (только просмотр).";
+      info.style.marginBottom = "8px";
+      info.textContent = "У родителя роли и флаги считаются по объединению потомков (только просмотр).";
       el.rolesBox.appendChild(info);
+      const { split, colRoles, colFlags } = createTwoColumnLayout();
+      el.rolesBox.appendChild(split);
+      appendSelectedList(
+        colRoles,
+        "Выбрано ролей",
+        state.roles.filter((role) => effectiveRoles.has(role.authority)),
+        (role) => role.authority
+      );
+      appendSubsection(colRoles, "Роли");
       state.roles.forEach((role) => {
         const label = document.createElement("label");
         label.className = "role-item role-item-readonly";
@@ -258,11 +365,38 @@
         cb.disabled = true;
         label.appendChild(cb);
         label.appendChild(document.createTextNode(` ${role.authority} — ${role.title}`));
-        el.rolesBox.appendChild(label);
+        colRoles.appendChild(label);
+      });
+      appendSelectedList(
+        colFlags,
+        "Выбрано флагов",
+        state.accessKeysCatalog.filter((key) => effectiveAccess.has(key)),
+        (key) => key
+      );
+      appendSubsection(colFlags, "Флаги (accessInfoKeys)");
+      state.accessKeysCatalog.forEach((key) => {
+        const label = document.createElement("label");
+        label.className = "role-item role-item-readonly access-key-item";
+        const cb = document.createElement("input");
+        cb.type = "checkbox";
+        cb.checked = effectiveAccess.has(key);
+        cb.disabled = true;
+        label.appendChild(cb);
+        label.appendChild(document.createTextNode(` ${key}`));
+        colFlags.appendChild(label);
       });
       return;
     }
 
+    const { split, colRoles, colFlags } = createTwoColumnLayout();
+    el.rolesBox.appendChild(split);
+    appendSelectedList(
+      colRoles,
+      "Выбрано ролей",
+      state.roles.filter((role) => effectiveRoles.has(role.authority)),
+      (role) => role.authority
+    );
+    appendSubsection(colRoles, "Роли");
     state.roles.forEach((role) => {
       const label = document.createElement("label");
       label.className = "role-item";
@@ -277,7 +411,38 @@
       });
       label.appendChild(cb);
       label.appendChild(document.createTextNode(` ${role.authority} — ${role.title}`));
-      el.rolesBox.appendChild(label);
+      colRoles.appendChild(label);
+    });
+
+    appendSelectedList(
+      colFlags,
+      "Выбрано флагов",
+      state.accessKeysCatalog.filter((key) => effectiveAccess.has(key)),
+      (key) => key
+    );
+    appendSubsection(colFlags, "Флаги (accessInfoKeys)");
+    if (!state.accessKeysCatalog.length) {
+      const empty = document.createElement("div");
+      empty.className = "status muted";
+      empty.textContent = "Каталог флагов пуст. Загрузите accessInfoKeys.json или обновите data.js.";
+      colFlags.appendChild(empty);
+      return;
+    }
+    state.accessKeysCatalog.forEach((key) => {
+      const label = document.createElement("label");
+      label.className = "role-item access-key-item";
+      const cb = document.createElement("input");
+      cb.type = "checkbox";
+      cb.checked = effectiveAccess.has(key);
+      cb.addEventListener("change", () => {
+        if (cb.checked) node.accessKeys.add(key);
+        else node.accessKeys.delete(key);
+        syncNodeToRoute(node);
+        refreshAll(false);
+      });
+      label.appendChild(cb);
+      label.appendChild(document.createTextNode(` ${key}`));
+      colFlags.appendChild(label);
     });
   }
 
@@ -296,6 +461,7 @@
   function rebuildState(roles, routes) {
     state.roles = roles;
     state.rolesMap = new Map(roles.map((r) => [r.authority, r]));
+    state.accessKeysMap = new Map(state.accessKeysCatalog.map((k) => [k, k]));
     state.routesOriginal = clone(routes);
     state.routesWorking = clone(routes);
     state.nodesById.clear();
@@ -320,8 +486,12 @@
     state.nodesById.forEach((node, id) => {
       const imported = importedNodes.get(id);
       if (!imported) return;
-      const roles = imported.meta && Array.isArray(imported.meta.roles) ? imported.meta.roles : state.roles.map((r) => r.authority);
+      const roles = imported.meta && Array.isArray(imported.meta.roles) ? imported.meta.roles : [];
       node.roles = new Set(roles.filter((r) => state.rolesMap.has(r)));
+      const keys = imported.meta && Array.isArray(imported.meta.accessInfoKeys)
+        ? imported.meta.accessInfoKeys
+        : [];
+      node.accessKeys = new Set(keys.filter((k) => state.accessKeysMap.has(k)));
       syncNodeToRoute(node);
       updated++;
     });
@@ -333,6 +503,14 @@
     const node = state.selectedNodeId ? state.nodesById.get(state.selectedNodeId) : null;
     if (!node || node.childIds.length) return;
     node.roles = all ? new Set(state.roles.map((r) => r.authority)) : new Set();
+    syncNodeToRoute(node);
+    refreshAll(false);
+  }
+
+  function setAllAccessKeysForSelected(all) {
+    const node = state.selectedNodeId ? state.nodesById.get(state.selectedNodeId) : null;
+    if (!node || node.childIds.length) return;
+    node.accessKeys = all ? new Set(state.accessKeysCatalog) : new Set();
     syncNodeToRoute(node);
     refreshAll(false);
   }
@@ -354,10 +532,12 @@
       if (!embedded || !embedded.roles || !embedded.routes) throw new Error("Не найдены встроенные данные (data.js).");
       state.embeddedRolesRaw = clone(embedded.roles);
       state.embeddedRoutesRaw = clone(embedded.routes);
+      state.embeddedAccessKeysRaw = embedded.accessInfoKeys != null ? clone(embedded.accessInfoKeys) : null;
+      state.accessKeysCatalog = normalizeAccessKeysCatalog(embedded.accessInfoKeys);
       const roles = normalizeRolesJson(embedded.roles);
       if (!Array.isArray(embedded.routes)) throw new Error("routes.json: ожидается массив");
       rebuildState(roles, embedded.routes);
-      setStatus("Данные загружены. Можно редактировать роли и экспортировать JSON.", true);
+      setStatus("Данные загружены. Редактируйте роли и флаги, затем экспортируйте JSON.", true);
     } catch (e) {
       setError(e.message);
       setStatus("Ошибка инициализации встроенных данных");
@@ -403,13 +583,32 @@
       setError(e.message);
     }
   });
+  el.importAccessKeysFile.addEventListener("change", async () => {
+    try {
+      setError("");
+      const file = el.importAccessKeysFile.files && el.importAccessKeysFile.files[0];
+      if (!file) return;
+      const raw = await parseJsonFile(file);
+      const catalog = normalizeAccessKeysCatalog(raw);
+      if (!catalog.length) throw new Error("accessInfoKeys: список пуст");
+      state.accessKeysCatalog = catalog;
+      state.embeddedAccessKeysRaw = raw;
+      if (!state.routesWorking || !state.roles.length) throw new Error("Сначала загрузите roles и routes (или откройте страницу с data.js)");
+      rebuildState(state.roles, clone(state.routesWorking));
+      setStatus("accessInfoKeys.json импортирован", true);
+    } catch (e) {
+      setError(e.message);
+    }
+  });
   el.exportMappedBtn.addEventListener("click", () => {
     syncAllNodesToRoutes();
-    downloadJson("routes.roles.mapped.json", state.routesWorking);
+    downloadJson("routes.mapped.json", state.routesWorking);
     setStatus("Результат экспортирован", true);
   });
   el.allRolesBtn.addEventListener("click", () => setAllRolesForSelected(true));
   el.clearRolesBtn.addEventListener("click", () => setAllRolesForSelected(false));
+  el.allAccessBtn.addEventListener("click", () => setAllAccessKeysForSelected(true));
+  el.clearAccessBtn.addEventListener("click", () => setAllAccessKeysForSelected(false));
   el.expandAllBtn.addEventListener("click", () => expandCollapseAll(true));
   el.collapseAllBtn.addEventListener("click", () => expandCollapseAll(false));
   el.searchInput.addEventListener("input", () => {
