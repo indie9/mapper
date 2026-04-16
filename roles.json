@@ -1,0 +1,257 @@
+{
+    "status": 0,
+    "data": [
+        {
+            "id": 1863,
+            "authority": "SD_ADMIN",
+            "title": "Администратор",
+            "groupTitle": "SDESK",
+            "readOnly": true
+        },
+        {
+            "id": 1874,
+            "authority": "BZ_ADMINISTRATOR",
+            "title": "Администратор БЗ",
+            "groupTitle": "База знаний",
+            "readOnly": true
+        },
+        {
+            "id": 2809,
+            "authority": "DISK_ADMINISTRATOR",
+            "title": "Администратор диска",
+            "groupTitle": "DISK",
+            "readOnly": true
+        },
+        {
+            "id": 3495,
+            "authority": "EL_ADMINISTRATOR",
+            "title": "Администратор журнала событий",
+            "readOnly": false
+        },
+        {
+            "id": 1911,
+            "authority": "SCHED_CAL_MANAGER",
+            "title": "Администратор календаря",
+            "groupTitle": "Платформа",
+            "readOnly": true
+        },
+        {
+            "id": 1866,
+            "authority": "SD_CLIENT_ADMIN",
+            "title": "Администратор клиентов",
+            "groupTitle": "SDESK",
+            "readOnly": true
+        },
+        {
+            "id": 1869,
+            "authority": "PLT_MODULE_ADMINISTRATOR",
+            "title": "Администратор модуля",
+            "groupTitle": "Платформа",
+            "readOnly": true
+        },
+        {
+            "id": 1872,
+            "authority": "OP_ADMINISTRATOR",
+            "title": "Администратор ОиП",
+            "groupTitle": "Орг. & Перс.",
+            "readOnly": true
+        },
+        {
+            "id": 1867,
+            "authority": "SD_PARTNER_ADMIN",
+            "title": "Администратор партнеров",
+            "groupTitle": "SDESK",
+            "readOnly": true
+        },
+        {
+            "id": 1862,
+            "authority": "SD_MAIL_ADMIN",
+            "title": "Администратор рассылок",
+            "groupTitle": "SDESK",
+            "readOnly": true
+        },
+        {
+            "id": 1882,
+            "authority": "CHATBOT_ADMINISTRATOR",
+            "title": "Администратор Чат-бота",
+            "groupTitle": "Чат-бот",
+            "readOnly": true
+        },
+        {
+            "id": 1880,
+            "authority": "SD_APPLICANT_EXT",
+            "title": "Внешний заявитель",
+            "groupTitle": "SDESK",
+            "readOnly": true
+        },
+        {
+            "id": 1881,
+            "authority": "SD_MANAGER_EXT",
+            "title": "Внешний контролер",
+            "groupTitle": "SDESK",
+            "readOnly": true
+        },
+        {
+            "id": 1858,
+            "authority": "SD_APPLICANT",
+            "title": "Заявитель",
+            "groupTitle": "SDESK",
+            "readOnly": true
+        },
+        {
+            "id": 1870,
+            "authority": "PLT_OPERATOR",
+            "title": "Исполнитель своих задач",
+            "groupTitle": "Платформа",
+            "readOnly": true
+        },
+        {
+            "id": 1877,
+            "authority": "BZ_CLIENT",
+            "title": "Клиент БЗ",
+            "groupTitle": "База знаний",
+            "readOnly": true
+        },
+        {
+            "id": 1860,
+            "authority": "MNT_ANALYST",
+            "title": "Конструктор отчетов",
+            "groupTitle": "MNT",
+            "readOnly": true
+        },
+        {
+            "id": 2814,
+            "authority": "PLT_ORG_CONTROLLER",
+            "title": "Контролер по подразделению",
+            "groupTitle": "Платформа",
+            "readOnly": false
+        },
+        {
+            "id": 1883,
+            "authority": "CHATBOT_MODERATOR",
+            "title": "Модератор Чат-бота",
+            "groupTitle": "Чат-бот",
+            "readOnly": true
+        },
+        {
+            "id": 1871,
+            "authority": "PLT_CONTROLLER",
+            "title": "Общий контролер",
+            "groupTitle": "Платформа",
+            "readOnly": true
+        },
+        {
+            "id": 1864,
+            "authority": "SD_SUPPORT_OPERATOR",
+            "title": "Оператор ТП",
+            "groupTitle": "SDESK",
+            "readOnly": true
+        },
+        {
+            "id": 1879,
+            "authority": "DISK_USER",
+            "title": "Пользователь Диска",
+            "groupTitle": "Роли Диска",
+            "readOnly": true
+        },
+        {
+            "id": 1861,
+            "authority": "MNT_USER",
+            "title": "Пользователь отчетов",
+            "groupTitle": "MNT",
+            "readOnly": true
+        },
+        {
+            "id": 1878,
+            "authority": "CHAT_USER",
+            "title": "Пользователь чата",
+            "groupTitle": "Чат",
+            "readOnly": true
+        },
+        {
+            "id": 1857,
+            "authority": "PLT_WORKFLOW_ARCHITECT",
+            "title": "Право супер администратора",
+            "groupTitle": "SYS",
+            "readOnly": true
+        },
+        {
+            "id": 1913,
+            "authority": "SD_CMDB_READ",
+            "title": "Просмотр CMDB",
+            "groupTitle": "SDESK",
+            "readOnly": false
+        },
+        {
+            "id": 1873,
+            "authority": "OP_CLIENT",
+            "title": "Просмотр ОиП",
+            "groupTitle": "Орг. & Перс.",
+            "readOnly": true
+        },
+        {
+            "id": 1875,
+            "authority": "BZ_PUBLISHER",
+            "title": "Публикатор БЗ",
+            "groupTitle": "База знаний",
+            "readOnly": true
+        },
+        {
+            "id": 2808,
+            "authority": "DISK_EDITOR",
+            "title": "Редактор диска",
+            "groupTitle": "DISK",
+            "readOnly": true
+        },
+        {
+            "id": 1859,
+            "authority": "SD_CATALOG_OPERATOR",
+            "title": "Редактор справочников",
+            "groupTitle": "SDESK",
+            "readOnly": true
+        },
+        {
+            "id": 1865,
+            "authority": "SD_SUPPORT_MANAGER",
+            "title": "Руководитель тех поддержки",
+            "groupTitle": "SDESK",
+            "readOnly": true
+        },
+        {
+            "id": 1868,
+            "authority": "PLT_ADMINISTRATOR",
+            "title": "Системный Администратор",
+            "groupTitle": "Платформа",
+            "readOnly": true
+        },
+        {
+            "id": 1914,
+            "authority": "SD_CMDB_EDIT",
+            "title": "Управление CMDB",
+            "groupTitle": "SDESK",
+            "readOnly": false
+        },
+        {
+            "id": 2811,
+            "authority": "administrator",
+            "title": "Уровень доступа Администратор-тест",
+            "groupTitle": "Платформа",
+            "readOnly": false
+        },
+        {
+            "id": 1912,
+            "authority": "BZ_PARTICIPANT",
+            "title": "Участник БЗ",
+            "groupTitle": "База знаний",
+            "readOnly": false
+        },
+        {
+            "id": 1876,
+            "authority": "BZ_USER",
+            "title": "Читатель БЗ",
+            "groupTitle": "База знаний",
+            "readOnly": true
+        }
+    ],
+    "totalRows": 36
+}

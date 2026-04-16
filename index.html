@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Role-Menu Mapper</title>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <div class="app-shell">
+    <header class="header-card">
+      <div>
+        <h1>Role-Menu Mapper</h1>
+        <p>Управление доступностью пунктов меню по ролям</p>
+      </div>
+      <div class="header-actions">
+        <label class="file-input">Импорт результата <input id="importFile" type="file" accept=".json"></label>
+        <label class="file-input">Импорт roles.json <input id="importRolesFile" type="file" accept=".json"></label>
+        <label class="file-input">Импорт routes.json <input id="importRoutesFile" type="file" accept=".json"></label>
+        <button id="exportMappedBtn" type="button" disabled>Экспорт результата</button>
+      </div>
+    </header>
+
+    <section class="panel">
+      <div class="toolbar">
+        <input id="searchInput" type="text" placeholder="Поиск по path / name / title">
+      </div>
+      <div id="statusLine" class="status muted">Инициализация встроенных данных...</div>
+      <div id="errorBox" class="error"></div>
+    </section>
+
+    <main class="workspace">
+      <section class="panel pane">
+        <div class="pane-title">Дерево маршрутов</div>
+        <div class="row">
+          <button id="expandAllBtn" type="button" disabled>Раскрыть все</button>
+          <button id="collapseAllBtn" type="button" disabled>Свернуть до корня</button>
+        </div>
+        <div id="treeRoot" class="tree-root"></div>
+      </section>
+      <section class="panel pane">
+        <div class="pane-title">Роли выбранного узла</div>
+        <div id="selectedMeta" class="status muted">Узел не выбран</div>
+        <div class="row">
+          <button id="allRolesBtn" type="button" disabled>Назначить все</button>
+          <button id="clearRolesBtn" type="button" disabled>Снять все</button>
+        </div>
+        <div id="rolesBox" class="role-grid"></div>
+      </section>
+    </main>
+  </div>
+
+  <script src="./data.js"></script>
+  <script src="./navbar-i18n.js"></script>
+  <script src="./app.js"></script>
+</body>
+</html>

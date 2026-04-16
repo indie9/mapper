@@ -1,0 +1,1714 @@
+[
+  {
+    "path": "/main",
+    "name": "Main",
+    "meta": {
+      "title": "navbar.routes.page.main",
+      "restricted": true,
+      "class": "main-page",
+      "iconPath": "/styleguide/images/menu-icons/home.svg",
+      "externalRoutesHandlerName": "handleMainPageRoute"
+    }
+  },
+  {
+    "path": "/tasks",
+    "name": "Task",
+    "meta": {
+      "title": "navbar.routes.page.tasks",
+      "restricted": true,
+      "class": "wd-task-page",
+      "iconPath": "/styleguide/images/menu-icons/tasks.svg",
+      "roles": [
+        "SD_ADMIN",
+        "SD_SUPPORT_OPERATOR",
+        "SD_SUPPORT_MANAGER",
+        "SD_APPLICANT",
+        "SD_APPLICANT_EXT",
+        "SD_MANAGER_EXT"
+      ]
+    },
+    "children": [
+      {
+        "path": "/tasks/card",
+        "name": "TaskCard",
+        "meta": {
+          "title": "navbar.routes.page.card",
+          "visible": false,
+          "restricted": true,
+          "class": "tasks-card",
+          "pageClass": "old-styles-page gwt-styles-page"
+        }
+      }
+    ]
+  },
+  {
+    "path": "/appeals",
+    "name": "Appeals",
+    "meta": {
+      "title": "navbar.routes.page.appeals",
+      "titleByRoleMap": {
+        "SD_MANAGER": "navbar.routes.page.appeals",
+        "SD_CATALOG_OPERATOR": "navbar.routes.page.appeals",
+        "SD_ANALYST": "navbar.routes.page.appeals",
+        "SD_MAIL_ADMIN": "navbar.routes.page.appeals",
+        "SD_ADMIN": "navbar.routes.page.appeals",
+        "SD_SUPPORT_OPERATOR": "navbar.routes.page.appeals",
+        "SD_SUPPORT_MANAGER": "navbar.routes.page.appeals",
+        "SD_APPLICANT": "navbar.routes.page.appeals.forApplicant",
+        "SD_APPLICANT_EXT": "navbar.routes.page.appeals.forApplicant",
+        "SD_MANAGER_EXT": "navbar.routes.page.appeals.forApplicant"
+      },
+      "roles": [],
+      "accessInfoKeys": [
+        "canViewAppeals"
+      ],
+      "externalRoutesHandlerName": "handleAppealsRoute",
+      "restricted": true,
+      "class": "appeals",
+      "iconPath": "/styleguide/images/menu-icons/appeals.svg",
+      "overlayIconPath": "/styleguide/images/overlay-icons/appeals.svg",
+      "pageClass": "gwt-styles-page"
+    }
+  },
+  {
+    "path": "/approval",
+    "name": "Approval",
+    "meta": {
+      "title": "navbar.routes.page.approval",
+      "restricted": true,
+      "class": "approval",
+      "iconPath": "/styleguide/images/menu-icons/approval.svg",
+      "overlayIconPath": "/styleguide/images/overlay-icons/approval.svg",
+      "externalRoutesHandlerName": "handleApprovalRoute",
+      "pageClass": "gwt-styles-page",
+      "roles": [],
+      "accessInfoKeys": [
+        "canViewApproval"
+      ]
+    }
+  },
+  {
+    "path": "/favours",
+    "name": "Favours",
+    "meta": {
+      "visible": true,
+      "title": "navbar.routes.page.favours",
+      "roles": [],
+      "accessInfoKeys": [
+        "canViewMyFavours"
+      ],
+      "restricted": true,
+      "class": "my-favours",
+      "iconPath": "/styleguide/images/menu-icons/favour-catalog.svg"
+    }
+  },
+  {
+    "path": "/knowledge-base",
+    "name": "KnowledgeBase",
+    "meta": {
+      "title": "navbar.routes.page.kb",
+      "roles": [
+        "BZ_USER",
+        "BZ_PUBLISHER",
+        "BZ_ADMINISTRATOR",
+        "BZ_PARTICIPANT",
+        "BZ_CLIENT"
+      ],
+      "restricted": true,
+      "class": "objects",
+      "iconPath": "/styleguide/images/menu-icons/knowledge-base.svg"
+    }
+  },
+  {
+    "path": "/management",
+    "redirect": "/management/favour-catalog",
+    "name": "Management",
+    "checkParent": true,
+    "meta": {
+      "title": "navbar.routes.page.management",
+      "restricted": true,
+      "class": "management",
+      "roles": [],
+      "hasGroups": true,
+      "accessInfoKeys": [
+        "canViewCatalog",
+        "canViewManagement"
+      ],
+      "iconPath": "/styleguide/images/menu-icons/managment.svg",
+      "overlayIconPath": "/styleguide/images/overlay-icons/managment.svg"
+    },
+    "withExtraMenu": true,
+    "children": [
+      {
+        "path": "/handbooks/favour-catalog",
+        "name": "FavourCatalog",
+        "meta": {
+          "parentName": "Management",
+          "title": "navbar.routes.page.management.catalog",
+          "restricted": true,
+          "class": "catalog",
+          "roles": [],
+          "accessInfoKeys": [
+            "canViewKuService"
+          ],
+          "group": 1,
+          "additionalIcon": "/styleguide/images/menu-icons/appeals.svg"
+        }
+      },
+      {
+        "path": "/agreements",
+        "name": "Agreements",
+        "meta": {
+          "visible": true,
+          "title": "navbar.routes.page.agreements",
+          "roles": [],
+          "accessInfoKeys": [
+            "canViewAgreements"
+          ],
+          "group": 1,
+          "endOfGroup": true,
+          "restricted": true,
+          "class": "agreements",
+          "additionalIcon": "/styleguide/images/menu-icons/agreements.svg"
+        }
+      },
+      {
+        "path": "/handbooks/base-cu",
+        "name": "BaseCU",
+        "meta": {
+          "title": "navbar.routes.page.cu",
+          "restricted": true,
+          "roles": [],
+          "accessInfoKeys": [
+            "canViewKeBase"
+          ],
+          "group": 2,
+          "class": "base-cu",
+          "additionalIcon": "/styleguide/images/menu-icons/base-cu.svg"
+        }
+      },
+      {
+        "path": "/handbooks/cmdb",
+        "name": "CMDB",
+        "meta": {
+          "title": "CMDB",
+          "restricted": true,
+          "roles": [],
+          "accessInfoKeys": [
+            "canViewCMDB"
+          ],
+          "group": 2,
+          "endOfGroup": true,
+          "class": "cmdb",
+          "additionalIcon": "/styleguide/images/menu-icons/cmdb.svg"
+        }
+      },
+      {
+        "path": "/management/scheduled-launch",
+        "name": "ScheduledLaunch",
+        "meta": {
+          "title": "navbar.routes.page.scheduledLaunch",
+          "group": 3,
+          "endOfGroup": true,
+          "restricted": true,
+          "class": "scheduled-launch",
+          "roles": []
+        }
+      },
+      {
+        "path": "/management/laborcost-managment",
+        "name": "LaborcostManagment",
+        "meta": {
+          "title": "navbar.routes.page.laborcostManagment",
+          "group": 3,
+          "endOfGroup": true,
+          "restricted": true,
+          "class": "laborcost-managment",
+          "roles": []
+        }
+      },
+      {
+        "path": "/users#",
+        "name": "MainOrganization",
+        "redirect": "/users#/?showDeletedOrg=false&userType=currentOrganization",
+        "checkParent": false,
+        "meta": {
+          "parentName": "Management",
+          "visible": true,
+          "title": "navbar.routes.page.users",
+          "roles": [],
+          "accessInfoKeys": [
+            "canViewUsers"
+          ],
+          "restricted": true,
+          "class": "clients",
+          "group": 4,
+          "iconPath": "/styleguide/images/menu-icons/users.svg",
+          "additionalIcon": "/styleguide/images/menu-icons/users.svg"
+        },
+        "withExtraMenu": true,
+        "children": [
+          {
+            "path": "/users#/?showDeletedOrg=false&userType=currentOrganization",
+            "name": "MainOrganization",
+            "checkChild": true,
+            "meta": {
+              "title": "navbar.routes.page.internalOrg",
+              "parentName": "Management",
+              "restricted": true,
+              "class": "main-organization",
+              "accessInfoKeys": [
+                "canViewRootOrg"
+              ]
+            }
+          },
+          {
+            "path": "/users#/?showDeletedOrg=false&userType=contractors",
+            "name": "Contractors",
+            "checkChild": true,
+            "meta": {
+              "title": "navbar.routes.page.contractors",
+              "restricted": true,
+              "class": "contractors",
+              "accessInfoKeys": [
+                "canViewContractors"
+              ]
+            }
+          },
+          {
+            "path": "/users#/?showDeletedOrg=false&userType=clients",
+            "name": "Clients",
+            "checkChild": true,
+            "meta": {
+              "title": "navbar.routes.page.clients",
+              "restricted": true,
+              "class": "clients",
+              "accessInfoKeys": [
+                "canViewClients"
+              ]
+            }
+          },
+          {
+            "path": "/users#/?showDeletedOrg=false&userType=withoutOrganization",
+            "name": "WithoutOrganization",
+            "checkChild": true,
+            "meta": {
+              "title": "navbar.routes.page.withoutOrg",
+              "restricted": true,
+              "class": "without-organization",
+              "accessInfoKeys": [
+                "canViewNoOrgUsers"
+              ]
+            }
+          },
+          {
+            "path": "/users#/?showDeletedOrg=false&userType=usersGroups",
+            "name": "UsersGroups",
+            "checkChild": true,
+            "meta": {
+              "title": "navbar.routes.page.usersGroups",
+              "restricted": true,
+              "class": "users-groups",
+              "accessInfoKeys": [
+                "canViewUserGroups"
+              ]
+            }
+          },
+          {
+            "path": "/users#/?showDeletedOrg=false&userType=departmentsGroups",
+            "name": "DepartmentsGroups",
+            "checkChild": true,
+            "meta": {
+              "title": "navbar.routes.page.orgGroups",
+              "restricted": true,
+              "class": "departments-groups",
+              "accessInfoKeys": [
+                "canViewOrgGroups"
+              ],
+              "visible": false
+            }
+          }
+        ]
+      },
+      {
+        "path": "/schedule",
+        "name": "Schedule",
+        "meta": {
+          "title": "navbar.routes.page.handbooks.schedule",
+          "group": 4,
+          "restricted": true,
+          "roles": [],
+          "accessInfoKeys": [
+            "canViewSettings"
+          ],
+          "class": "schedule"
+        }
+      },
+      {
+        "path": "/management/mailingAndPublications",
+        "redirect": "/publications/news",
+        "name": "MailingAndPublications",
+        "meta": {
+          "title": "navbar.routes.page.mailing",
+          "roles": [],
+          "accessInfoKeys": [
+            "canViewMailings",
+            "canViewNews",
+            "canViewCalendar"
+          ],
+          "restricted": true,
+          "class": "mailing",
+          "hasGroups": true,
+          "iconPath": "/styleguide/images/menu-icons/mailing.svg",
+          "additionalIcon": "/styleguide/images/menu-icons/publications.svg",
+          "pageClass": "gwt-styles-page"
+        },
+        "withExtraMenu": true,
+        "children": [
+          {
+            "path": "/publications/news",
+            "name": "PublicationsNews",
+            "meta": {
+              "title": "navbar.routes.page.news",
+              "restricted": true,
+              "class": "publications-news",
+              "roles": [],
+              "accessInfoKeys": [
+                "canViewNews"
+              ],
+              "group": 1
+            }
+          },
+          {
+            "path": "/system/calendar#/event",
+            "name": "EventCalendar",
+            "meta": {
+              "title": "navbar.routes.page.eventCalendar",
+              "restricted": true,
+              "class": "event-calendar",
+              "roles": [],
+              "accessInfoKeys": [
+                "canViewCalendar"
+              ],
+              "group": 1,
+              "endOfGroup": true
+            }
+          },
+          {
+            "path": "/mailing#/list",
+            "name": "MailingList",
+            "meta": {
+              "title": "navbar.routes.page.mailing.list",
+              "restricted": true,
+              "class": "mailing-list",
+              "roles": [
+                "ST_MAILING_ADMIN",
+                "SD_ADMIN"
+              ],
+              "group": 2
+            }
+          },
+          {
+            "path": "/mailing-groups#/list",
+            "name": "MailingGroupsList",
+            "meta": {
+              "title": "navbar.routes.page.mailing.group",
+              "restricted": true,
+              "class": "mailing-groups",
+              "roles": [
+                "ST_MAILING_ADMIN",
+                "SD_ADMIN"
+              ],
+              "group": 2
+            }
+          },
+          {
+            "path": "/mailing-templates#/list",
+            "name": "MailingTemplatesList",
+            "meta": {
+              "title": "navbar.routes.page.mailing.templates",
+              "restricted": true,
+              "class": "mailing-templates",
+              "roles": [
+                "ST_MAILING_ADMIN",
+                "SD_ADMIN"
+              ],
+              "group": 2
+            }
+          },
+          {
+            "path": "/surveys#/list",
+            "name": "SurveysList",
+            "meta": {
+              "title": "navbar.routes.page.surveys",
+              "restricted": true,
+              "class": "surveys-list",
+              "roles": [
+                "SD_ADMIN"
+              ],
+              "group": 2,
+              "endOfGroup": true
+            }
+          }
+        ]
+      }
+    ]
+  },
+
+  {
+    "path": "/settings",
+    "redirect": "/settings/services/appeal-types",
+    "name": "Settings",
+    "checkParent": true,
+    "meta": {
+      "title": "navbar.routes.page.settings",
+      "restricted": true,
+      "class": "system-settings",
+      "iconPath": "/styleguide/images/menu-icons/settings.svg",
+      "overlayIconPath": "/styleguide/images/overlay-icons/settings.svg",
+      "roles": [
+        "SD_ADMIN",
+        "SD_SUPPORT_MANAGER",
+        "PLT_CONTROLLER",
+        "PLT_WORKFLOW_ARCHITECT",
+        "OP_ADMINISTRATOR",
+        "OP_MODERATOR"
+      ],
+      "accessInfoKeys": [
+        "canViewSettings"
+      ]
+    },
+    "withExtraMenu": true,
+    "children": [
+      {
+
+        "path": "/profiles/list",
+        "name": "Profiles",
+        "meta": {
+          "title": "navbar.page.org.employs",
+          "locales": {
+            "en": "Profiles"
+          },
+          "restricted": true,
+          "class": "profiles",
+          "visible": true,
+          "icon": "icon-identification-card",
+          "roles": [
+            "OP_ADMINISTRATOR",
+            "OP_MODERATOR",
+            "PLT_CONTROLLER",
+            "PLT_WORKFLOW_ARCHITECT",
+            "SD_ADMIN",
+            "SD_SUPPORT_MANAGER"
+          ]
+        },
+        "children": [
+          {
+            "path": "/profiles/posts",
+            "name": "ProfilesPosts",
+            "meta": {
+              "title": "navbar.page.posts",
+              "locales": {
+                "en": "Posts"
+              },
+              "restricted": true,
+              "class": "profiles-posts",
+              "pageClass": "",
+              "roles": [
+                "OP_ADMINISTRATOR"
+              ]
+            }
+          },
+          {
+            "path": "/profiles/groups",
+            "name": "ProfilesGroups",
+            "meta": {
+              "title": "navbar.page.groups",
+              "locales": {
+                "en": "Groups"
+              },
+              "restricted": true,
+              "class": "profiles-groups",
+              "pageClass": "",
+              "roles": [
+                "OP_ADMINISTRATOR",
+                "OP_MODERATOR"
+              ]
+            }
+          },
+          {
+            "path": "/profiles/roles",
+            "name": "Roles",
+            "meta": {
+              "title": "navbar.routes.page.roles",
+              "restricted": true,
+              "roles": [
+                "SD_ADMIN"
+              ]
+            }
+          },
+          {
+            "path": "/profiles/substitution",
+            "name": "Substitutions",
+            "meta": {
+              "title": "navbar.page.substitutions",
+              "locales": {
+                "en": "Substitutions"
+              },
+              "restricted": true,
+              "roles": [
+                "SD_ADMIN",
+                "SD_SUPPORT_MANAGER"
+              ]
+            }
+          },
+          {
+            "path": "/profiles/competence",
+            "name": "Competence",
+            "meta": {
+              "title": "Компетенции",
+              "locales": {
+                "en": "Competence"
+              },
+              "restricted": true,
+              "roles": []
+            }
+          }
+        ]
+      },
+      {
+        "path": "/settings/laborcosts",
+        "redirect": "/settings/laborcosts/work-type",
+        "name": "Labor Costs",
+        "meta": {
+          "title": "navbar.routes.page.laborСost",
+          "accessInfoKeys": [
+            "canViewSettings"
+          ],
+          "restricted": true,
+          "class": "services",
+          "hideOnMobile" : true,
+          "iconPath": "/styleguide/images/menu-icons/resources.svg",
+          "additionalIcon": "/styleguide/images/menu-icons/resources.svg"
+        },
+        "withExtraMenu": true,
+        "children": [
+          {
+            "path": "/settings/laborcosts/work-type",
+            "name": "Work Type Handbook",
+            "meta": {
+              "title": "navbar.routes.page.handbooks.workType",
+              "group": 1,
+              "restricted": true,
+              "roles": [],
+              "accessInfoKeys": [
+                "canViewSettings"
+              ],
+              "class": "work-type"
+            }
+          },
+          {
+            "path": "/settings/laborcosts/activity",
+            "name": "Activity",
+            "meta": {
+              "title": "navbar.routes.page.handbooks.activity",
+              "group": 1,
+              "restricted": true,
+              "roles": [],
+              "accessInfoKeys": [
+                "canViewSettings"
+              ],
+              "class": "activity"
+            }
+          },
+          {
+            "path": "/settings/laborcosts/workshift",
+            "name": "Workshift",
+            "meta": {
+              "title": "navbar.routes.page.handbooks.workshift",
+              "group": 1,
+              "restricted": true,
+              "roles": [],
+              "accessInfoKeys": [
+                "canViewSettings"
+              ],
+              "class": "workshift"
+            }
+          },
+          {
+            "path": "/settings/laborcosts/handbook-schedule-type",
+            "name": "ScheduleType",
+            "meta": {
+              "title": "navbar.routes.page.handbooks.scheduleType",
+              "group": 1,
+              "restricted": true,
+              "roles": [],
+              "accessInfoKeys": [
+                "canViewSettings"
+              ],
+              "class": "schedule-type"
+            }
+          }
+        ]
+      },
+      {
+        "path": "/settings/handbooks",
+        "redirect": "/settings/handbooks/approval-objects",
+        "name": "Handbooks",
+        "meta": {
+          "title": "navbar.routes.page.handbooks.approvals",
+          "roles": [],
+          "accessInfoKeys": [
+            "canViewSettings"
+          ],
+          "restricted": true,
+          "class": "handbooks",
+          "hasGroups": true,
+          "hideOnMobile" : true,
+          "iconPath": "/styleguide/images/menu-icons/favour-catalog.svg",
+          "additionalIcon": "/styleguide/images/menu-icons/appeals.svg"
+        },
+        "withExtraMenu": true,
+        "children": [
+          {
+            "path": "/settings/handbooks/approval-objects",
+            "name": "ApprovalObjects",
+            "meta": {
+              "title": "navbar.routes.page.approval.objects",
+              "group": 1,
+              "restricted": true,
+              "class": "approval-objects"
+            }
+          },
+          {
+            "path": "/settings/handbooks/approval-types",
+            "name": "ApprovalTypes",
+            "meta": {
+              "title": "navbar.routes.page.approval.types",
+              "group": 1,
+              "restricted": true,
+              "class": "approval-types"
+            }
+          },
+          {
+            "path": "/settings/handbooks/approval-priority",
+            "name": "ApprovalPriority",
+            "meta": {
+              "title": "navbar.routes.page.approval.priority",
+              "group": 1,
+              "restricted": true,
+              "class": "approval-priority"
+            }
+          }
+        ]
+      },
+      {
+        "path": "/settings/services",
+        "redirect": "/settings/services/appeal-types",
+        "name": "Services",
+        "meta": {
+          "title": "navbar.routes.page.services",
+          "roles": [],
+          "accessInfoKeys": [
+            "canViewSettings"
+          ],
+          "restricted": true,
+          "class": "services",
+          "hasGroups": true,
+          "hideOnMobile" : true,
+          "iconPath": "/styleguide/images/menu-icons/favour-catalog.svg",
+          "additionalIcon": "/styleguide/images/menu-icons/appeals.svg"
+        },
+        "withExtraMenu": true,
+        "children": [
+          {
+            "path": "/settings/services/appeal-types",
+            "name": "AppealTypes",
+            "meta": {
+              "title": "navbar.routes.page.appealTypes",
+              "group": 1,
+              "endOfGroup": true,
+              "restricted": true,
+              "class": "appeal-types",
+              "roles": [
+                "SD_ADMIN"
+              ]
+            }
+          },
+          {
+            "path": "/settings/services/appeals-template",
+            "name": "AppealsTemplate",
+            "meta": {
+              "title": "navbar.routes.page.appealsTemplate",
+              "group": 1,
+              "endOfGroup": true,
+              "restricted": true,
+              "class": "appeals-template",
+              "roles": [
+                "SD_ADMIN"
+              ]
+            }
+          },
+          {
+            "path": "/settings/services/handbook-checklist",
+            "name": "HandbookChecklist",
+            "meta": {
+              "title": "navbar.routes.page.handbookChecklist",
+              "group": 1,
+              "endOfGroup": true,
+              "restricted": true,
+              "class": "handbook-checklist",
+              "roles": [
+                "SD_ADMIN"
+              ]
+            }
+          },
+          {
+            "path": "/settings/services/priority",
+            "name": "Priority Handbook",
+            "meta": {
+              "title": "navbar.routes.page.handbooks.priority",
+              "group": 2,
+              "restricted": true,
+              "roles": [],
+              "accessInfoKeys": [
+                "canViewSettings"
+              ],
+              "class": "priority"
+            }
+          },
+          {
+            "path": "/settings/services/urgency",
+            "name": "Urgency Handbook",
+            "meta": {
+              "title": "navbar.routes.page.handbooks.urgency",
+              "restricted": true,
+              "roles": [],
+              "group": 2,
+              "accessInfoKeys": [
+                "canViewSettings"
+              ],
+              "class": "urgency"
+            }
+          },
+          {
+            "path": "/settings/services/degree-impact",
+            "name": "Degree Impact Handbook",
+            "meta": {
+              "title": "navbar.routes.page.handbooks.degreeImpact",
+              "restricted": true,
+              "roles": [],
+              "group": 2,
+              "endOfGroup": true,
+              "accessInfoKeys": [
+                "canViewSettings"
+              ],
+              "class": "degree-impact"
+            }
+          },
+          {
+            "path": "/settings/services/sla-settings-groups",
+            "name": "SlaSettingsGroups",
+            "meta": {
+              "title": "navbar.routes.page.slaSettingsGroups",
+              "group": 3,
+              "restricted": true,
+              "pageClass": "sla-settings-groups",
+              "roles": [],
+              "accessInfoKeys": [
+                "canViewBaseSLA",
+                "canEditBaseSLA"
+              ]
+            }
+          },
+          {
+            "path": "/settings/services/provision-param-groups",
+            "name": "ProvisionParamGroups",
+            "meta": {
+              "title": "navbar.routes.page.provisionParamGroups",
+              "group": 3,
+              "restricted": true,
+              "pageClass": "provision-param-groups",
+              "roles": [],
+              "accessInfoKeys": [
+                "canViewBaseSLA",
+                "canEditBaseSLA"
+              ]
+            }
+          },
+          {
+            "path": "/settings/services/description-templates",
+            "name": "Description templates handbook",
+            "meta": {
+              "title": "navbar.routes.page.descriptionTemplates",
+              "group": 3,
+              "endOfGroup": true,
+              "restricted": true,
+              "pageClass": "description-templates",
+              "roles": [],
+              "accessInfoKeys": [
+                "canViewBaseSLA",
+                "canEditBaseSLA"
+              ]
+            }
+          },
+          {
+            "path": "/settings/services/basic-sla-settings",
+            "name": "BasicSlaSettings",
+            "meta": {
+              "title": "navbar.routes.page.slaSettings",
+              "group": 4,
+              "restricted": true,
+              "pageClass": "basic-sla-settings",
+              "roles": [],
+              "accessInfoKeys": [
+                "canViewBaseSLA",
+                "canEditBaseSLA"
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "path": "/settings/configurations",
+        "redirect": "/settings/configurations/conditions",
+        "name": "Configurations",
+        "meta": {
+          "title": "navbar.routes.page.configurations",
+          "roles": [],
+          "accessInfoKeys": [
+            "canViewSettings"
+          ],
+          "restricted": true,
+          "class": "configurations",
+          "hasGroups": true,
+          "hideOnMobile" : true
+        },
+        "withExtraMenu": true,
+        "children": [
+          {
+            "path": "/settings/configurations/conditions",
+            "name": "Conditions",
+            "meta": {
+              "title": "navbar.routes.page.conditions",
+              "group": 1,
+              "endOfGroup": true,
+              "restricted": true,
+              "class": "conditions",
+              "roles": [
+                "SD_ADMIN"
+              ]
+            }
+          },
+          {
+            "path": "/settings/configurations/links-type",
+            "name": "linksType",
+            "meta": {
+              "title": "navbar.routes.page.links.type",
+              "group": 1,
+              "endOfGroup": true,
+              "restricted": true,
+              "class": "links-type",
+              "roles": [
+                "SD_ADMIN"
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "path": "/settings/reports",
+        "redirect": "/settings/reports/monitoring",
+        "name": "Reports",
+        "meta": {
+          "title": "navbar.routes.page.reports",
+          "accessInfoKeys": [
+            "canViewSettings"
+          ],
+          "restricted": true,
+          "class": "services",
+          "hideOnMobile" : true,
+          "iconPath": "/styleguide/images/menu-icons/reports.svg",
+          "additionalIcon": "/styleguide/images/menu-icons/reports.svg"
+        },
+        "withExtraMenu": true,
+        "children": [
+          {
+            "path": "/settings/reports/monitoring",
+            "name": "ReportsMonitoring",
+            "meta": {
+              "title": "navbar.routes.page.reports.monitoring",
+              "restricted": true,
+              "class": "monitoring",
+              "roles": [
+                "MNT_ANALYST"
+              ]
+            }
+          },
+          {
+            "path": "/settings/reports/kpi",
+            "name": "KPI Handbook",
+            "meta": {
+              "title": "navbar.routes.page.handbooks.kpi",
+              "restricted": true,
+              "roles": [],
+              "group": 2,
+              "accessInfoKeys": [
+                "canViewSettings"
+              ],
+              "class": "kpi"
+            }
+          }
+        ]
+      },
+      {
+        "path": "/settings/base",
+        "redirect": "/settings/base/mail-flow",
+        "name": "BaseSettings",
+        "meta": {
+          "title": "navbar.routes.page.settings.base",
+          "roles": [],
+          "accessInfoKeys": [
+            "canViewSettings"
+          ],
+          "restricted": true,
+          "class": "services",
+          "hasGroups": true,
+          "iconPath": "/styleguide/images/menu-icons/reports.svg",
+          "additionalIcon": "/styleguide/images/menu-icons/settings.svg"
+        },
+        "withExtraMenu": true,
+        "children": [
+          {
+            "path": "/settings/base/mail-flow#/list",
+            "name": "MailFlow",
+            "meta": {
+              "title": "navbar.routes.page.mailFlow",
+              "group": 1,
+              "restricted": true,
+              "class": "mail-flow",
+              "roles": [
+                "ST_MAILING_ADMIN",
+                "SD_ADMIN"
+              ]
+            }
+          },
+          {
+            "path": "/settings/base/mail-notifications",
+            "name": "MailNotifications",
+            "meta": {
+              "title": "navbar.routes.page.mailNotifications",
+              "restricted": true,
+              "group": 1,
+              "endOfGroup": true,
+              "class": "mail-notifications",
+              "roles": [
+                "ST_MAILING_ADMIN",
+                "SD_ADMIN"
+              ]
+            }
+          },
+          {
+            "path": "/settings/base/mail-notification-template",
+            "name": "MailNotificationsTemplate",
+            "meta": {
+              "title": "navbar.routes.page.mailNotificationsTemplate",
+              "restricted": true,
+              "group": 1,
+              "endOfGroup": true,
+              "class": "sd-mail-notification-template",
+              "roles": [
+                "ST_MAILING_ADMIN",
+                "SD_ADMIN"
+              ]
+            }
+          },
+          {
+            "path": "/settings/base/form-editor",
+            "name": "FormEditor",
+            "meta": {
+              "title": "navbar.routes.page.form.editor",
+              "restricted": true,
+              "group": 2,
+              "visible": false,
+              "class": "form-editor",
+              "roles": [
+                "SD_ADMIN"
+              ]
+            }
+          },
+          {
+            "path": "/settings/base/fields-library#/components",
+            "name": "ComponentsLibrary",
+            "meta": {
+              "title": "navbar.routes.page.components.library",
+              "restricted": true,
+              "group": 2,
+              "class": "components-library",
+              "roles": [
+                "SD_ADMIN"
+              ]
+            }
+          },
+          {
+            "path": "/settings/base/fields-library#/fields",
+            "name": "FieldsLibrary",
+            "meta": {
+              "title": "navbar.routes.page.fields.library",
+              "restricted": true,
+              "group": 2,
+              "class": "fields-library",
+              "roles": [
+                "SD_ADMIN"
+              ]
+            }
+          },
+          {
+            "path": "/settings/base/fields-library#/lists",
+            "name": "FieldsLists",
+            "meta": {
+              "title": "navbar.routes.page.fields.lists",
+              "restricted": true,
+              "group": 2,
+              "endOfGroup": true,
+              "class": "fields-lists",
+              "roles": [
+                "SD_ADMIN"
+              ]
+            }
+          },
+          {
+            "path": "/system/calendar#/production",
+            "name": "ProductionCalendar",
+            "meta": {
+              "title": "navbar.routes.page.productionCalendar",
+              "restricted": true,
+              "group": 4,
+              "endOfGroup": true,
+              "class": "production-calendar",
+              "pageClass": "",
+              "roles": [
+                "SD_ADMIN"
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "path": "/settings/diag",
+        "redirect": "/settings/diag/event-log",
+        "name": "EventLog",
+        "checkParent": true,
+        "meta": {
+          "title": "navbar.routes.page.diag",
+          "restricted": true,
+          "roles": [
+            "ST_MAILING_ADMIN",
+            "SD_ADMIN"
+          ],
+          "iconPath": "/styleguide/images/menu-icons/diagnostic.svg",
+          "overlayIconPath": "/styleguide/images/overlay-icons/diagnostic.svg",
+          "additionalIcon": "/styleguide/images/menu-icons/diagnostic.svg"
+        },
+        "withExtraMenu": true,
+        "children": [
+          {
+            "path": "/settings/diag/event-log",
+            "name": "EventLog",
+            "parentName": "EventLog",
+            "checkChild": true,
+            "meta": {
+              "title": "navbar.routes.page.eventLog",
+              "restricted": true,
+              "class": "event-log",
+              "roles": [
+                "SD_ADMIN"
+              ]
+            }
+          },
+          {
+            "path": "/settings/diag/mail-monitoring",
+            "name": "MailMonitoringList",
+            "parentName": "EventLog",
+            "checkChild": true,
+            "meta": {
+              "title": "navbar.routes.page.mailMonitoring",
+              "restricted": true,
+              "class": "mail-monitoring",
+              "roles": [
+                "ST_MAILING_ADMIN",
+                "SD_ADMIN"
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "path": "/settings/system",
+        "redirect": "/settings/system/process-list-configuration",
+        "name": "SettingsSystem",
+        "meta": {
+          "title": "navbar.routes.page.settings.system",
+          "roles": [
+            "PLT_WORKFLOW_ARCHITECT"
+          ],
+          "accessInfoKeys": [
+            "canViewSettings"
+          ],
+          "restricted": true,
+          "hideOnMobile" : true,
+          "class": "services",
+          "additionalIcon": "/styleguide/images/menu-icons/system-settings.svg"
+        },
+        "withExtraMenu": true,
+        "children": [
+          {
+            "path": "/settings/system/process-list-configuration",
+            "name": "ProcessListConfiguration",
+            "meta": {
+              "title": "navbar.routes.page.processList",
+              "restricted": true,
+              "pageClass": "process-list-configuration",
+              "roles": [
+                "PLT_WORKFLOW_ARCHITECT"
+              ]
+            }
+          },
+          {
+            "path": "/settings/system/widgets",
+            "name": "WidgetsSettings",
+            "meta": {
+              "title": "navbar.routes.page.widgetsSettings",
+              "restricted": true,
+              "class": "widgets-settings",
+              "roles": [
+                "PLT_WORKFLOW_ARCHITECT"
+              ]
+            }
+          },
+          {
+            "path": "/settings/system/user-manage#/structure",
+            "name": "UserStructure",
+            "meta": {
+              "title": "navbar.routes.page.usersStructure",
+              "restricted": true,
+              "pageClass": "old-styles-page",
+              "roles": [
+                "PLT_WORKFLOW_ARCHITECT"
+              ]
+            }
+          },
+          {
+            "path": "/settings/system/catalog-management",
+            "name": "CatalogManagement",
+            "checkChild": true,
+            "parentName": "Settings",
+            "meta": {
+              "title": "navbar.routes.page.catalogs",
+              "restricted": true,
+              "visible": true,
+              "class": "catalog-management",
+              "roles": [
+                "PLT_WORKFLOW_ARCHITECT"
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "path": "/design",
+        "redirect": "/wd-design",
+        "name": "DesignStudio",
+        "meta": {
+          "title": "navbar.routes.page.designStudio",
+          "class": "design-studio",
+          "hideOnMobile" : true,
+          "iconPath": "/styleguide/images/menu-icons/design-studio.svg",
+          "overlayIconPath": "/styleguide/images/overlay-icons/design-studio.svg",
+          "roles": [
+            "PLT_WORKFLOW_ARCHITECT"
+          ]
+        },
+        "withExtraMenu": true,
+        "children": [
+          {
+            "path": "/wd-design",
+            "name": "WdDesign",
+            "meta": {
+              "title": "navbar.routes.page.workflowsDesigner",
+              "class": "wd-design-page",
+              "pageClass": "old-styles-page gwt-styles-page",
+              "forceReload": false,
+              "roles": [
+                "PLT_WORKFLOW_ARCHITECT"
+              ]
+            }
+          },
+          {
+            "path": "/tc-library",
+            "name": "TCLibrary",
+            "meta": {
+              "title": "navbar.routes.page.componentsLib",
+              "class": "tc-library-page",
+              "pageClass": "old-styles-page gwt-styles-page",
+              "forceReload": false,
+              "roles": [
+                "PLT_WORKFLOW_ARCHITECT"
+              ]
+            }
+          },
+          {
+            "path": "/cl-design",
+            "name": " CLDesigner",
+            "meta": {
+              "title": "navbar.routes.page.listsDesigner",
+              "class": "cl-design-page",
+              "pageClass": "old-styles-page gwt-styles-page",
+              "forceReload": false,
+              "roles": [
+                "PLT_WORKFLOW_ARCHITECT"
+              ]
+            }
+          },
+          {
+            "path": "/scriptlet-library",
+            "name": "ScriptletLibrary",
+            "meta": {
+              "title": "navbar.routes.page.scriptletsLib",
+              "class": "scriptlet-library-page",
+              "forceReload": false,
+              "roles": [
+                "PLT_WORKFLOW_ARCHITECT"
+              ]
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "path": "/sd-diagnostics",
+    "name": "SdDiagnostics",
+    "meta": {
+      "title": "navbar.routes.page.sdDiagnostics",
+      "restricted": true,
+      "class": "sd-diagnostics",
+      "iconPath": "/styleguide/images/menu-icons/diagnostic.svg",
+      "overlayIconPath": "/styleguide/images/overlay-icons/dashboards.svg",
+      "roles": [],
+      "accessInfoKeys": [
+        "canViewSettings"
+      ]
+    }
+  },
+  {
+    "path": "/monitoring",
+    "redirect": "/monitoring",
+    "name": "Monitoring",
+    "checkParent": true,
+    "meta": {
+      "title": "navbar.routes.page.monitoring",
+      "restricted": true,
+      "class": "system-settings",
+      "iconPath": "/styleguide/images/menu-icons/dashboards.svg",
+      "overlayIconPath": "/styleguide/images/overlay-icons/dashboards.svg",
+      "roles": [
+        "MNT_ANALYST",
+        "MNT_USER"
+      ]
+    },
+    "withExtraMenu": true,
+    "children": [
+      {
+        "path": "/reports-viewer#/{{code}}",
+        "name": "ReportViewer",
+        "meta": {
+          "title": "navbar.routes.page.reports",
+          "restricted": true,
+          "roles": [
+            "MNT_ANALYST",
+            "MNT_USER"
+          ],
+          "iconPath": "/styleguide/images/menu-icons/reports.svg",
+          "overlayIconPath": "/styleguide/images/overlay-icons/reports.svg",
+          "additionalIcon": "/styleguide/images/menu-icons/reports.svg"
+        },
+        "withExtraMenu": true,
+        "additionalRoute": true,
+        "sourceLink": "/gateway/kck-monitoring/rest/publish/reports",
+        "additionalChildren": {
+          "path": "/reports-viewer#/{{code}}",
+          "name": "{{code}}",
+          "code": "code",
+          "meta": {
+            "title": "title",
+            "class": "{{code}}",
+            "restricted": true
+          }
+        }
+      },
+      {
+        "path": "/monitoring/dashboard-viewer#/{{code}}",
+        "name": "DashboardViewer",
+        "meta": {
+          "title": "navbar.routes.page.dashboards",
+          "restricted": true,
+          "roles": [
+            "MNT_ANALYST",
+            "MNT_USER"
+          ],
+          "iconPath": "/styleguide/images/menu-icons/dashboards.svg",
+          "overlayIconPath": "/styleguide/images/overlay-icons/dashboards.svg",
+          "additionalIcon": "/styleguide/images/menu-icons/dashboards.svg"
+        },
+        "withExtraMenu": true,
+        "additionalRoute": true,
+        "sourceLink": "/gateway/kck-monitoring/rest/dashboards?showInMenu=true&status=PUBLISHED",
+        "additionalChildren": {
+          "path": "/monitoring/dashboard-viewer#/{{code}}",
+          "name": "{{code}}",
+          "code": "code",
+          "meta": {
+            "title": "title",
+            "class": "{{code}}",
+            "restricted": true
+          }
+        }
+      }
+    ]
+  },
+  {
+    "path": "/drive",
+    "name": "Drive",
+    "meta": {
+      "title": "navbar.routes.page.drive",
+      "restricted": true,
+      "class": "drive",
+      "roles": [
+        "DISK_USER",
+        "DISK_EDITOR",
+        "DISK_ADMINISTRATOR"
+      ],
+      "iconPath": "/styleguide/images/menu-icons/disc.svg"
+    }
+  },
+
+
+
+  {
+    "path": "/organization",
+    "name": "My organization",
+    "meta": {
+      "title": "navbar.routes.page.myOrg",
+      "class": "my-organization",
+      "pageClass": "old-styles-page",
+      "roles": [
+        "ST_EMPLOYEE"
+      ]
+    }
+  },
+
+  {
+    "path": "/chatbot",
+    "name": "Chatbot",
+    "meta": {
+      "title": "navbar.routes.page.chatbot",
+      "restricted": true,
+      "class": "chatbot",
+      "pageClass": "old-styles-page",
+      "visible": false
+    },
+    "withExtraMenu": true,
+    "children": [
+      {
+        "path": "/chatbot#/bots",
+        "name": "ChatbotBots",
+        "meta": {
+          "title": "navbar.routes.page.chatbot.bots",
+          "restricted": true,
+          "class": "chatbot-bots",
+          "pageClass": "old-styles-page"
+        }
+      },
+      {
+        "path": "/chatbot#/scenarios",
+        "name": "ChatbotScenarios",
+        "meta": {
+          "title": "navbar.routes.page.chatbot.scenarios",
+          "restricted": true,
+          "class": "chatbot-scenarios",
+          "pageClass": "old-styles-page"
+        }
+      },
+      {
+        "path": "/chatbot#/stats",
+        "name": "ChatbotStats",
+        "meta": {
+          "title": "navbar.routes.page.chatbot.stats",
+          "restricted": true,
+          "class": "chatbot-stats",
+          "pageClass": "old-styles-page"
+        }
+      }
+    ]
+  },
+  {
+    "path": "/faq",
+    "name": "FAQ",
+    "meta": {
+      "title": "navbar.routes.page.faq",
+      "class": "faq-page",
+      "pageClass": "old-styles-page",
+      "excludedRoles": [
+        "SD_ADMIN",
+        "ST_CHIEF_OPERATOR",
+        "SD_APPLICANT",
+        "ST_EXECUTOR"
+      ],
+      "visible": false
+    }
+  },
+  {
+    "path": "/full_screen_view/filepreview",
+    "name": "FilePreview",
+    "meta": {
+      "title": "navbar.routes.page.filePreview",
+      "restricted": true,
+      "class": "filepreview",
+      "pageClass": "old-styles-page",
+      "visible": false
+    }
+  },
+  {
+    "path": "/full_screen_view/fileComparator",
+    "name": "FileComparator",
+    "meta": {
+      "title": "navbar.routes.page.fileCompare",
+      "restricted": true,
+      "class": "fileComparator",
+      "pageClass": "old-styles-page",
+      "visible": false
+    }
+  },
+  {
+    "path": "/subscription",
+    "name": "Subscription",
+    "meta": {
+      "title": "navbar.routes.page.subscription",
+      "roles": [
+        "SD_ADMIN"
+      ],
+      "restricted": true,
+      "visible": false
+    }
+  },
+  {
+    "path": "/tariffs-and-payment",
+    "name": "Tariffs and payment",
+    "meta": {
+      "title": "navbar.routes.page.tariffs",
+      "roles": [
+        "SD_ADMIN"
+      ],
+      "restricted": true,
+      "visible": false
+    }
+  },
+  {
+    "path": "/customization",
+    "name": "SystemCustomization",
+    "meta": {
+      "title": "navbar.routes.page.customization",
+      "visible": false,
+      "restricted": true,
+      "pageClass": "system-customization",
+      "roles": [
+        "SD_ADMIN"
+      ]
+    }
+  },
+  {
+    "path": "/password-resetter",
+    "name": "PasswordResetter",
+    "meta": {
+      "title": "navbar.routes.page.passwordCreation",
+      "roles": [],
+      "restricted": false,
+      "visible": false,
+      "system": true,
+      "pageClass": "no-breadcrumbs password-resetter-page"
+    }
+  },
+  {
+    "path": "/polls",
+    "name": "Polls",
+    "meta": {
+      "title": "navbar.routes.page.polls",
+      "roles": [],
+      "restricted": false,
+      "visible": false,
+      "system": true,
+      "pageClass": "no-breadcrumbs polls-page"
+    }
+  },
+  {
+    "path": "/start-process",
+    "name": "StartOfProcess",
+    "meta": {
+      "title": "navbar.routes.page.startOfProcess",
+      "roles": [],
+      "restricted": true,
+      "visible": false,
+      "system": true,
+      "pageClass": "old-styles-page gwt-styles-page no-breadcrumbs no-navbar no-footer no-header no-chatbot bg-white"
+    }
+  },
+  {
+    "path": "/public-forms",
+    "name": "Forms",
+    "meta": {
+      "title": "navbar.routes.page.forms",
+      "roles": [],
+      "restricted": false,
+      "visible": false,
+      "system": true,
+      "pageClass": "no-breadcrumbs public-forms-page"
+    }
+  },
+  {
+    "path": "/start",
+    "name": "StartOfProcess",
+    "meta": {
+      "title": "navbar.routes.page.processStart",
+      "restricted": true,
+      "pageClass": "old-styles-page",
+      "visible": false
+    },
+    "withExtraMenu": true,
+    "children": [
+      {
+        "path": "/start/card",
+        "name": "TaskCard",
+        "meta": {
+          "title": "navbar.routes.page.card",
+          "visible": false,
+          "restricted": true,
+          "class": "tasks-card",
+          "pageClass": "old-styles-page gwt-styles-page"
+        }
+      }
+    ]
+  },
+  {
+    "path": "/objects",
+    "name": "Objects",
+    "meta": {
+      "visible": false,
+      "title": "navbar.routes.page.objects",
+      "roles": [
+        "SD_APPLICANT",
+        "ST_MANAGER",
+        "TS_OPERATOR",
+        "TS_MANAGER",
+        "SD_ADMIN"
+      ],
+      "restricted": true,
+      "class": "objects",
+      "iconPath": "/styleguide/images/menu-icons/objects.svg"
+    }
+  },
+  {
+    "path": "/users-view",
+    "name": "Users",
+    "meta": {
+      "title": "navbar.routes.page.users.list",
+      "restricted": true,
+      "class": "clients",
+      "pageClass": "old-styles-page",
+      "roles": [
+        "SD_APPLICANT",
+        "ST_EXECUTOR"
+      ],
+      "excludedRoles": [
+        "SD_ADMIN",
+        "ST_CHIEF_OPERATOR"
+      ],
+      "visible": false
+    }
+  },
+  {
+    "path": "/handbooksOld",
+    "redirect": "/handbooksOld/urgency",
+    "name": "HandbooksOld",
+    "checkParent": true,
+    "meta": {
+      "visible": false,
+      "title": "navbar.routes.page.handbooks",
+      "restricted": true,
+      "class": "handbooks",
+      "roles": [],
+      "accessInfoKeys": [
+        "canViewSettings"
+      ],
+      "iconPath": "/styleguide/images/menu-icons/handbooks.svg",
+      "overlayIconPath": "/styleguide/images/overlay-icons/gears.svg"
+    },
+    "withExtraMenu": true,
+    "children": [
+      {
+        "path": "/handbooks/urgency",
+        "name": "Urgency",
+        "meta": {
+          "title": "navbar.routes.page.handbooks.urgency",
+          "restricted": true,
+          "roles": [],
+          "accessInfoKeys": [
+            "canViewSettings"
+          ],
+          "class": "urgency"
+        }
+      },
+      {
+        "path": "/handbooks/degree-impact",
+        "name": "Degree impact",
+        "meta": {
+          "title": "navbar.routes.page.handbooks.degreeImpact",
+          "restricted": true,
+          "roles": [],
+          "accessInfoKeys": [
+            "canViewSettings"
+          ],
+          "class": "degree-impact"
+        }
+      },
+      {
+        "path": "/handbooks/priority",
+        "name": "Priority",
+        "meta": {
+          "title": "navbar.routes.page.handbooks.priority",
+          "restricted": true,
+          "roles": [],
+          "accessInfoKeys": [
+            "canViewSettings"
+          ],
+          "class": "priority"
+        }
+      }
+    ]
+  },
+  {
+    "path": "/system/user-manage#/rights-roles",
+    "name": "RightsAndRoles",
+    "meta": {
+      "title": "navbar.routes.page.roles.rights",
+      "restricted": true,
+      "visible": false,
+      "group": 2,
+      "pageClass": "old-styles-page",
+      "roles": [
+        "PLT_WORKFLOW_ARCHITECT",
+        "SD_ADMIN"
+      ]
+    }
+  }
+]
